@@ -1,5 +1,13 @@
 # ansible-openvpn [![Build Status](https://travis-ci.org/BastiPaeltz/ansible-openvpn.svg?branch=master)](https://travis-ci.org/BastiPaeltz/ansible-openvpn)
 
+## LDSI Quick start
+Adding a client
+```
+ansible-playbook playbooks/add_clients.yml -e"clients_to_add=joedoe" --ask-vault-pass
+```
+When the playbook is done, look in the **fetched_creds** directory for a folder with the client name, e.g: **joedoe**, take the file **joedoe-servername-pki-embedded.ovpn**, this will be your OpenVPN config file. The passphrase to login is stored in the file **servername_pk_pass.txt**.
+
+## Details
 Ansible role and playbooks for installing openvpn and managing clients.
 
 This is a fork of [ansible-openvpn-hardened](https://github.com/bau-sec/ansible-openvpn-hardened).
