@@ -22,7 +22,7 @@ openvpn_instances:
       port: 1194,
       mask: "10.9.0.0 255.255.255.0",
       cidr: "10.9.0.0/24",
-      server_extra_options: ['push "redirect-gateway def1 bypass-dhcp"', 'push "dhcp-option DNS 1.1.1.1"', 'push "dhcp-option DNS 8.8.8.8"'],
+      server_extra_options: ['push "redirect-gateway def1 bypass-dhcp"', 'push "dhcp-option DNS 1.1.1.1"', 'push "dhcp-option DNS 8.8.8.8"', 'push "dhcp-option DOMAIN-SEARCH library.yorku.ca"'],
       client_extra_options: [],
   }
   # Uncomment below to listen on TCP 443. This will look like normal SSL/TLS traffic
