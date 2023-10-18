@@ -1,6 +1,18 @@
 # ansible-openvpn 
 
+
+
 ## LDSI Quick start
+
+### Adding a client/user
+```
+ansible-playbook playbooks/add_clients.yml --ask-vault-pass -e"clients_to_add=joedoe"
+```
+When the playbook is done, look in the **fetched_creds** directory for a folder with the client name, e.g: **joedoe**, take the file **joedoe-servername-pki-embedded.ovpn**, this will be your OpenVPN config file. The passphrase to login is stored in the file **servername_pk_pass.txt**.
+
+
+
+### Server Configuration
 The Openvpn server is on port 443, and its configuration is /etc/openvpn/tcp-443.conf.
 To start/stop/restart/status the server instance, use the systemctl command, for example:
 ```
@@ -12,13 +24,6 @@ Server configuration options are stored locally in ldsi/group_vars/all.yml. Afte
 ```
 ansible-playbook --ask-vault-pass playbooks/install.yml
 ```
-
-
-Adding a client
-```
-ansible-playbook playbooks/add_clients.yml --ask-vault-pass -e"clients_to_add=joedoe"
-```
-When the playbook is done, look in the **fetched_creds** directory for a folder with the client name, e.g: **joedoe**, take the file **joedoe-servername-pki-embedded.ovpn**, this will be your OpenVPN config file. The passphrase to login is stored in the file **servername_pk_pass.txt**.
 
 
 
