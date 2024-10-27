@@ -83,24 +83,27 @@
 
 - name: OpenVPN | PKI | Build CA
   expect:
-    command: ./easyrsa build-ca --req-cn "ca@{{ openvpn_server_common_name }}"
+    command: ./easyrsa --vars={{ openvpn_path_easyrsa }}/vars build-ca
     responses:
       'Enter New CA Key Passphrase': "{{ ca_password }}"
       'Re-Enter New CA Key Passphrase': "{{ ca_password }}"
+      'Enter PEM pass phrase': "{{ ca_password }}"
+      'Verifying - Enter PEM pass phrase': "{{ ca_password }}"
+      'Common Name .*:$': "ca@{{ openvpn_server_common_name }}"
     chdir: "{{ openvpn_path_easyrsa }}"
     creates: "{{ openvpn_path_easyrsa }}/pki/private/ca.key"
 
 - name: OpenVPN | PKI | Build CRL
   expect:
-    command: ./easyrsa gen-crl
+    command: ./easyrsa --vars={{ openvpn_path_easyrsa }}/vars gen-crl
     responses:
-      'Enter pass phrase for .*?:$': "{{ ca_password }}"
+      'Enter pass phrase for .*:$': "{{ ca_password }}"
     chdir: "{{ openvpn_path_easyrsa }}"
     creates: "{{ openvpn_crl }}"
 
 - name: OpenVPN | PKI | Add server
   expect:
-    command: ./easyrsa build-server-full "server@{{ openvpn_server_common_name }}" nopass --req-cn "server@{{ openvpn_server_common_name }}"
+    command: ./easyrsa --vars={{ openvpn_path_easyrsa }}/vars build-server-full "server@{{ openvpn_server_common_name }}" nopass --req-cn "server@{{ openvpn_server_common_name }}"
     responses:
       'Enter pass phrase for .*?:$': "{{ ca_password }}"
     chdir: "{{ openvpn_path_easyrsa }}"
@@ -115,7 +118,7 @@
     - skip_ansible_lint
 
 - name: OpenVPN | PKI | Build dh.pem
-  shell: ./easyrsa gen-dh
+  shell: ./easyrsa --vars={{ openvpn_path_easyrsa }}/vars gen-dh
   args:
     chdir: "{{ openvpn_path_easyrsa }}"
     creates: "{{ dhparams_location }}"
