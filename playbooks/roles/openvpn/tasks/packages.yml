@@ -10,6 +10,7 @@
     pkg:
       - openvpn 
 
-- name: OpenVPN | package | Install pexpect via pip
-  pip:
-    name: "pexpect"
+- name: OpenVPN | package | Install pexpect via apt
+  apt:
+    pkg:
+      - python3-pexpect
